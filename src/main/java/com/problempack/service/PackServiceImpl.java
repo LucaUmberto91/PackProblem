@@ -44,7 +44,7 @@ class PackServiceImpl implements  PackService{
         List<Item> myPack = new ArrayList<Item>();
         inPack(weight, itemList, pack, itemList.size());
             System.out.println("Best choice for weight: " + weight);
-            for(int i = 0; i <pack.size()-1; i++) {
+            for(int i = 0; i <pack.size(); i++) {
                 myPack.add(pack.get(i));
                 myPack.get(i).setId(i);
                 System.out.println("Elemento con id : "+pack.get(i).getId()+" e con peso: "+pack.get(i).getWeight()+" e valore: "+pack.get(i).getValue());
@@ -52,6 +52,23 @@ class PackServiceImpl implements  PackService{
             System.out.println("Per un totale di euro : "+inPack(weight, itemList, pack, itemList.size()));
             return myPack;
         }
+
+    @Override
+        public boolean verify(List<Item> list){
+        boolean verify = true;
+        if(list.size()>15) verify=false;
+        return verify;
+    }
+
+    @Override
+    public List<Item> filter(List<Item> list){
+        List newList = new ArrayList<>();
+        for(Item i : list){
+            if(i.getWeight()<=100 && i.getValue()<=100) newList.add(i);
+
+        }
+        return newList;
+    }
 
     public List<Item> getMy_pack() {
         return pack;

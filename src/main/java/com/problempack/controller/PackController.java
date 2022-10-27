@@ -31,9 +31,11 @@ public class PackController {
 	@GetMapping(path = "/result")
 	public @ResponseBody Object find(@RequestBody List<Item> itemList ,
 									 @RequestParam (name = "weight")double weight) {
-		itemList.add(new Item(0, 5, 70));
-
-		return packService.bestChoice(itemList,weight);
+		if (weight>100) return "Il peso massimo che il pacco può contenere è di 100 kg";
+		else if(packService.verify(itemList)) {
+			return packService.bestChoice(packService.filter(itemList),weight);
+		}
+		else return "La lista non rispetta i parametri richiesti";
 	}
 
 }
